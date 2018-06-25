@@ -4,7 +4,9 @@ var comercioSchema = new mongoose.Schema({
   nombre: String,
   direccion: String,
   coord_x: Number,
-  coord_y: Number
+  coord_y: Number,
+  tipo: String,
+  departamento: String
 });
 
 var Comercio = mongoose.model('Comercios', comercioSchema);

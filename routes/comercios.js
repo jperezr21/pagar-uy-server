@@ -20,22 +20,36 @@ router.get('/', (req, res) => {
   let query = Comercio.find(queryConditions);
   query.exec(function(err, result) {
     if (!err) {
+      console.log(`Comercios obtenidos:\n${toJSONString(result)}\n`);
       res.json(result);
     } else {
-      console.log(`Error al obtener comercios:\n${err}`);
+      console.log(`Error al obtener comercios:\n${err}\n`);
       res.status(500).send('Error al obtener comercios');
+    }
+  });
+});
+
+router.get('/:id', (req, res) => {
+  Comercio.findById(req.params.id, function(err, comercio) {
+    if (err) {
+      console.log(`Error al obtener comercio:\n${err}\n`);
+      res.status(500).send('Error al obtener comercio');
+    } else {
+      console.log(`Comercio obtenido:\n${toJSONString(comercio)}\n`);
+      res.json(comercio);
     }
   });
 });
 
 router.post('/', (req, res) => {
   let newComercio = new Comercio(req.body);
-  console.log(`Comercio a guardar:\n${newComercio}`);
+  console.log(`Comercio a guardar:\n${toJSONString(newComercio)}\n`);
   newComercio.save(function(err) {
     if (err) {
-      console.log(`Error al guardar comercio:\n${err}`);
+      console.log(`Error al guardar comercio:\n${err}\n`);
       res.status(500).send('Error al guardar comercio');
     } else {
+      console.log('Comercio guardado correctamente');
       res.end('OK');
     }
   });
@@ -44,22 +58,38 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   Comercio.findById(req.params.id, function(err, comercio) {
     if (err) {
-      console.log(`Error al obtener comercio:\n${err}`);
+      console.log(`Error al obtener comercio:\n${err}\n`);
       res.status(500).send('Error al obtener comercio');
     } else {
-      console.log(`Comercio a actualizar:\n${comercio}`);
+      console.log(`Comercio a actualizar:\n${toJSONString(comercio)}\n`);
       comercio.set(req.body);
       comercio.save(function(err, updatedComercio) {
         if (err) {
-          console.log(`Error al actualizar comercio:\n${err}`);
+          console.log(`Error al actualizar comercio:\n${err}\n`);
           res.status(500).send('Error al actualizar comercio');
         } else {
-          console.log(`Comercio actualizado:\n${updatedComercio}`);
+          console.log(`Comercio actualizado:\n${toJSONString(updatedComercio)}\n`);
           res.json(updatedComercio);
         }
       });
     }
   });
 });
+
+router.delete('/:id', (req, res) => {
+  Comercio.deleteOne({ _id: req.params.id }, function(err) {
+    if (err) {
+      console.log(`Error al eliminar comercio:\n${err}\n`);
+      res.status(500).send('Error al eliminar comercio');
+    } else {
+      console.log('Comercio eliminado correctamente');
+      res.end('OK');
+    }
+  });
+});
+
+function toJSONString(obj) {
+  return JSON.stringify(obj, undefined, 2);
+}
 
 module.exports = router;
