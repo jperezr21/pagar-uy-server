@@ -34,6 +34,9 @@ router.get('/:id', (req, res) => {
     if (err) {
       console.log(`Error al obtener comercio:\n${err}\n`);
       res.status(500).send('Error al obtener comercio');
+    } else if (comercio === null) {
+      console.log(`Comercio con ID '${req.params.id}' no existe\n`);
+      res.status(404).send('Comercio no encontrado');
     } else {
       console.log(`Comercio obtenido:\n${toJSONString(comercio)}\n`);
       res.json(comercio);
@@ -60,6 +63,9 @@ router.put('/:id', (req, res) => {
     if (err) {
       console.log(`Error al obtener comercio:\n${err}\n`);
       res.status(500).send('Error al obtener comercio');
+    } else if (comercio === null) {
+      console.log(`Comercio con ID '${req.params.id}' no existe\n`);
+      res.status(404).send('Comercio no encontrado');
     } else {
       console.log(`Comercio a actualizar:\n${toJSONString(comercio)}\n`);
       comercio.set(req.body);
