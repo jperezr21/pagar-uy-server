@@ -20,8 +20,8 @@ router.get('/', (req, res) => {
   if (req.query.coord_x && req.query.coord_y) {
     let coordX = parseFloat(req.query.coord_x);
     let coordY = parseFloat(req.query.coord_y);
-    queryConditions.coord_x = {$gt: coordX - 0.05, $lt: coordX + 0.05};
-    queryConditions.coord_y = {$gt: coordY - 0.05, $lt: coordY + 0.05};
+    queryConditions.coord_x = {$gt: coordX - 0.005, $lt: coordX + 0.005};
+    queryConditions.coord_y = {$gt: coordY - 0.005, $lt: coordY + 0.005};
   }
   let query = Comercio.find(queryConditions);
   query.exec(function (err, result) {
