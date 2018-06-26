@@ -11,8 +11,11 @@ router.get('/', (req, res) => {
   if (req.query.nombre) {
     queryConditions.nombre = new RegExp(req.query.nombre, 'i');
   }
-  if (req.query.direccion) {
-    queryConditions.direccion = req.query.direccion;
+  if (req.query.tipo) {
+    queryConditions.tipo = req.query.tipo;
+  }
+  if (req.query.departamento) {
+    queryConditions.departamento = req.query.departamento;
   }
   if (req.query.coord_x && req.query.coord_y) {
     let coordX = parseFloat(req.query.coord_x);
