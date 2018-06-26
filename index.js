@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require("mongoose");
-const morgan = require('morgan');
 const passport = require('passport');
 
 const server = require('./config/server');
